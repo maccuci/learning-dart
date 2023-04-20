@@ -1,5 +1,7 @@
 enum Planet {
-  oceana(name: "Oceana", type: PlanetType.oceanic, moons: 3, atmosphere: [Atmosphere.hydrogen, Atmosphere.methane]);
+  base(name: "Base", type: PlanetType.terrestrial, moons: 0, atmosphere: [Atmosphere.oxygen]),
+  oceana(name: "Oceana", type: PlanetType.oceanic, moons: 3, atmosphere: [Atmosphere.hydrogen, Atmosphere.methane]),
+  nimbus(name: "Nimbus", type: PlanetType.ice, moons: 10, atmosphere: [Atmosphere.methane, Atmosphere.oxygen]);
 
   const Planet({ required this.name, required this.type, required this.moons, required this.atmosphere });
 
@@ -10,6 +12,10 @@ enum Planet {
 
   String information() {
     return "Name: $name\nType: ${type.name}\nMoons: $moons\nAtmosphere: ${atmosphere.map((a) => a.name).join(", ")}";
+  }
+
+  bool canLand() {
+    return atmosphere.contains(Atmosphere.oxygen) && type == PlanetType.terrestrial;
   }
 }
 
