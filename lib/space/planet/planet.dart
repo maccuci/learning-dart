@@ -1,7 +1,8 @@
 enum Planet {
-  base(name: "Base", type: PlanetType.terrestrial, moons: 0, atmosphere: [Atmosphere.oxygen]),
+  base(name: "Base", type: PlanetType.terrestrial, moons: 1, atmosphere: [Atmosphere.oxygen]),
   oceana(name: "Oceana", type: PlanetType.oceanic, moons: 3, atmosphere: [Atmosphere.hydrogen, Atmosphere.methane]),
-  nimbus(name: "Nimbus", type: PlanetType.ice, moons: 10, atmosphere: [Atmosphere.methane, Atmosphere.oxygen]);
+  nimbus(name: "Nimbus", type: PlanetType.ice, moons: 10, atmosphere: [Atmosphere.methane, Atmosphere.oxygen]),
+  lyton(name: "Lyton", type: PlanetType.gas, moons: 4, atmosphere: [Atmosphere.carbon, Atmosphere.methane]);
 
   const Planet({ required this.name, required this.type, required this.moons, required this.atmosphere });
 
