@@ -31,10 +31,12 @@ class Spacecraft {
   }
 
   void describe() {
-    print("Spacecraft: ${model.name}");
+    print("Spacecraft Name: ${name}");
+    print("Spacecraft Type: ${model.name}");
     print("Spacecraft Destiny: ${destiny.name}");
     print("> Destiny Information:\n${destiny.information()}\n");
-    print("Spacecraft Crew size: ${model.crewMaxSize}");
+    print("Spacecraft Crew max. size: ${model.crewMaxSize}");
+    print("Spacecraft spaces left: ${model.crewMaxSize - crew.length}");
     print("Spacecraft Crew list:");
     if (crew.isEmpty) return print("-/-");
     for (final cm in crew) {

@@ -1,7 +1,7 @@
 class CrewMember {
-  String name;
-  String country;
-  int age;
+  final String name;
+  final String country;
+  final int age;
 
   CrewMember({ required this.name, required this.country, required this.age });
 

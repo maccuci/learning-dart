@@ -16,8 +16,9 @@ void main() {
     print("--[Spacecraft Panel]---");
     print("1 - Create Spacecraft.");
     print("2 - Add Crew member to Spacecraft.");
-    print("3 - Travel to the planet.");
-    print("--[Spacecraft Panel]---");
+    print("3 - Display your spacecraft stats.");
+    print("4 - Travel to the planet.");
+    print("-----------------------");
 
     String? input = stdin.readLineSync();
     int choice = int.parse(input!);
@@ -30,6 +31,9 @@ void main() {
         addCrewMember(spacecraft);
         break;
       case 3:
+        displayStats(spacecraft);
+        break;
+      case 4:
         travelToPlanet(spacecraft);
         break;
       case 0:
@@ -43,32 +47,42 @@ void main() {
 
 Spacecraft createSpacecraft() {
   print("A list of spacecraft models exists, choose one: ");
-  Spacecraft? spacecraft;
-  bool find = false;
+  for (final sm in SpacecraftModel.values) {
+    print(sm.name);
+  }
 
-  for (final sc in SpacecraftModel.values) {
-    print(sc.name);
-    find =
-        stdin.readLineSync()?.toLowerCase().contains(sc.name.toLowerCase()) ??
-            false;
-    if (find) {
-      print("Insert a name for your Spacecraft: ");
-      String? name = stdin.readLineSync();
-      if (name != null) {
-        spacecraft = Spacecraft(m: sc, n: name);
-        print(
-            "The ${spacecraft.name} (${spacecraft.model.name}) spacecraft was created!\n");
-        spacecraft.describe();
-        break;
-      }
+  Spacecraft? spacecraft;
+  bool found = false;
+  String? userInput = stdin.readLineSync();
+
+  for (final sm in SpacecraftModel.values) {
+    if (userInput != null &&
+        userInput.split(' ').any(
+            (word) => sm.name.toLowerCase().contains(word.toLowerCase()))) {
+      found = true;
+      spacecraft = createSpacecraftWithName(sm);
+      break;
     }
   }
 
-  if (!find) {
+  if (!found) {
     print("The spacecraft model was not found. Try again later.");
   }
 
   return spacecraft!;
+}
+
+Spacecraft createSpacecraftWithName(SpacecraftModel model) {
+  print("Insert a name for your Spacecraft: ");
+  String? name = stdin.readLineSync();
+  if (name != null) {
+    Spacecraft spacecraft = Spacecraft(m: model, n: name);
+    print(
+        "The ${spacecraft.name} (${spacecraft.model.name}) spacecraft was created!\n");
+    spacecraft.describe();
+    return spacecraft;
+  }
+  throw ArgumentError("Spacecraft name cannot be null.");
 }
 
 void addCrewMember(Spacecraft? spacecraft) {
@@ -90,6 +104,15 @@ void addCrewMember(Spacecraft? spacecraft) {
   }
 }
 
+void displayStats(Spacecraft? spacecraft) {
+  if (spacecraft == null) {
+    print("Please create a spacecraft first.");
+    return;
+  }
+
+  spacecraft.describe();
+}
+
 void travelToPlanet(Spacecraft? spacecraft) {
   if (spacecraft == null) {
     print("Please create a spacecraft first.");
@@ -102,7 +125,7 @@ void travelToPlanet(Spacecraft? spacecraft) {
   }
 
   String? planetString = stdin.readLineSync()?.toLowerCase();
-  Planet? selectedPlanet = Planet.values.firstWhere(
+  Planet selectedPlanet = Planet.values.firstWhere(
     (planet) => planet.toString().split('.').last.toLowerCase() == planetString,
     orElse: () => Planet.base,
   );
