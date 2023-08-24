@@ -6,12 +6,14 @@ import 'spacecraft_model.dart';
 class Spacecraft {
   late String name;
   late SpacecraftModel model;
+  int fuel = 0;
   List<CrewMember> crew = [];
   late Planet destiny = Planet.base;
 
-  Spacecraft({required SpacecraftModel m, required String n}) {
+  Spacecraft({required SpacecraftModel m, required String n, required int f}) {
     model = m;
     name = n;
+    fuel = f;
   }
 
   void addCrewMember(CrewMember crewMember) {
@@ -33,9 +35,19 @@ class Spacecraft {
     crew.clear();
   }
 
+  void updateFuel(int f, bool reduce) {
+    if (reduce) {
+      fuel -= f;
+    } else {
+      if (fuel > model.maxFuel) return print("The fuel is too much for this spacecraft!");
+      fuel += f;
+    }
+  }
+
   void describe() {
     print("Spacecraft Name: $name");
     print("Spacecraft Type: ${model.name}");
+    print("Spacecraft Fuel: $fuel/${model.maxFuel}");
     print("Spacecraft Destiny: ${destiny.name}");
     print("> Destiny Information:\n${destiny.information()}\n");
     print("Spacecraft Crew max. size: ${model.crewMaxSize}");
