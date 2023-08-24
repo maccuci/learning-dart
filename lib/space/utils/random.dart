@@ -1,9 +1,11 @@
 import 'dart:math';
 
-String randomCountry() {
-  List<String> countries = ["EUA", "Brazil", "Canada", "Portugal", "Spain"];
+class RandomUtils {
+  static String randomCountry() {
+    List<String> countries = ["EUA", "Brazil", "Canada", "Portugal", "Spain"];
 
-  int random = Random().nextInt(countries.length);
+    int random = Random().nextInt(countries.length);
 
-  return countries[random];
+    return countries[random];
+  }
 }

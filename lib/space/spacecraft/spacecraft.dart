@@ -1,5 +1,6 @@
-import 'crew_member.dart';
-import 'planet/planet.dart';
+import 'package:learning_dart/space/crew_member.dart';
+import 'package:learning_dart/space/planet/planet.dart';
+
 import 'spacecraft_model.dart';
 
 class Spacecraft {
@@ -27,11 +28,13 @@ class Spacecraft {
   }
 
   void disband() {
+    name = "";
+    destiny = Planet.base;
     crew.clear();
   }
 
   void describe() {
-    print("Spacecraft Name: ${name}");
+    print("Spacecraft Name: $name");
     print("Spacecraft Type: ${model.name}");
     print("Spacecraft Destiny: ${destiny.name}");
     print("> Destiny Information:\n${destiny.information()}\n");

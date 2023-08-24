@@ -3,7 +3,7 @@ class CrewMember {
   final String country;
   final int age;
 
-  CrewMember({ required this.name, required this.country, required this.age });
+  CrewMember({required this.name, required this.country, required this.age});
 
   String information() {
     return "Crew Member \nName: $name\nCountry: $country\nAge: $age";

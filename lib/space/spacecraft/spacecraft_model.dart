@@ -4,7 +4,7 @@ enum SpacecraftModel {
   juno(name: "Juno", crewMaxSize: 7),
   voyager(name: "Voyager", crewMaxSize: 15);
 
-  const SpacecraftModel({ required this.name, required this.crewMaxSize });
+  const SpacecraftModel({required this.name, required this.crewMaxSize});
 
   final String name;
   final int crewMaxSize;

@@ -1,14 +1,17 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:async';
 
 import 'package:learning_dart/space/crew_member.dart';
 import 'package:learning_dart/space/planet/planet.dart';
 import 'package:learning_dart/space/utils/random.dart';
 
-import './space/spacecraft_model.dart';
-import './space/spacecraft.dart';
+import './space/spacecraft/spacecraft.dart';
+import './space/spacecraft/spacecraft_model.dart';
 
-void main() {
+//TODO: Create and add spacecraft fuel system.
+
+void main() async {
   bool exit = false;
   Spacecraft? spacecraft;
 
@@ -34,7 +37,7 @@ void main() {
         displayStats(spacecraft);
         break;
       case 4:
-        travelToPlanet(spacecraft);
+        await travelToPlanet(spacecraft);
         break;
       case 0:
         exit = true;
@@ -96,7 +99,7 @@ void addCrewMember(Spacecraft? spacecraft) {
   if (crewMemberName != null) {
     spacecraft.addCrewMember(CrewMember(
       name: crewMemberName,
-      country: randomCountry(),
+      country: RandomUtils.randomCountry(),
       age: Random().nextInt((50 - 15) + 1),
     ));
     print("A new crew member was added to your Spacecraft!");
@@ -113,7 +116,7 @@ void displayStats(Spacecraft? spacecraft) {
   spacecraft.describe();
 }
 
-void travelToPlanet(Spacecraft? spacecraft) {
+Future<void> travelToPlanet(Spacecraft? spacecraft) async {
   if (spacecraft == null) {
     print("Please create a spacecraft first.");
     return;
@@ -133,6 +136,22 @@ void travelToPlanet(Spacecraft? spacecraft) {
   if (selectedPlanet != Planet.base) {
     spacecraft.travelTo(planet: selectedPlanet);
     print("The spacecraft is traveling to the planet ${selectedPlanet.name}.");
+
+    final completer = Completer<void>();
+
+    await Future.delayed(Duration(seconds: 3), () {
+      final random = Random().nextInt(100);
+      if (random < 10) {
+        print("Your spacecraft has arrived at ${selectedPlanet.name}.");
+      } else {
+        print("Your travel to ${selectedPlanet.name} has failed. Try again.");
+      }
+      completer.complete();
+    });
+
+    completer.future.then((_) {
+      print("Something wrong happened. Try again later.");
+    });
   } else {
     print("Invalid planet name. Please enter a valid planet name.");
   }
