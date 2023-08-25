@@ -70,7 +70,7 @@ class SpacecraftManager {
 
   static void displayStats(Spacecraft? spacecraft) {
     if (spacecraft == null) {
-      print("Please create a spacecraft first.");
+      print("You need create a spacecraft first.");
       return;
     }
 
@@ -112,16 +112,14 @@ class SpacecraftManager {
           } else {
             print(
                 "Your travel to ${selectedPlanet.name} has failed. Try again.");
-            completer
-                .complete();
-                return;
+            completer.complete();
+            return;
           }
         } else {
           print("You don't have enough fuel to travel to this planet.");
-          completer
-              .complete();
+          completer.complete();
         }
-            spacecraft.travelTo(planet: selectedPlanet);
+        spacecraft.travelTo(planet: selectedPlanet);
       });
 
       await completer.future;
@@ -134,8 +132,7 @@ class SpacecraftManager {
     int spacecraftFuel = spacecraft.model.fuel;
     if (spacecraftFuel >= fuelNeed) {
       spacecraft.updateFuel(spacecraftFuel - fuelNeed, true);
-      completer
-          .complete();
+      completer.complete();
     }
   }
 }
